@@ -13,6 +13,7 @@ class UserProfile(models.Model):
     avatar = models.ImageField('Аватар', upload_to='avatars/', blank=True, null=True)
     about = models.TextField('О себе', blank=True, null=True)
     sex = models.CharField(choices=GENDER_CHOICES, max_length=1)
+    balance = models.PositiveSmallIntegerField('Баланс', default=0)
 
     def __str__(self):
         return str(self.user)

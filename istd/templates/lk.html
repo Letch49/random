@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block bg %}class="none"{% endblock %}
+
+{% block content %}
+    <section id="cabinet">
+        <div class="background-user" style="background-image: url('/media/{{ request.user.userdata.avatar }}'); background-position: 0 -518px; background-attachment: fixed;">
+            <div class="container p-5">
+                <div class="profile-header d-flex justify-content-between align-items-center">
+                    <div class="ava big-ava" style="background-image: url('/media/{{ request.user.userdata.avatar }}');"></div>
+                    <div class="about-user">
+                        <h2>{{ request.user.get_full_name }}</h2>
+                        <div class="label label-user">{{ request.user.username }}</div>
+                        <div class="user-info">{{ request.user.userdata.about }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container user-lk-content">
+
+            <div class="lk-main-content">
+                <div class="d-flex justify-content-between lk-menu-content">
+                    <nav class="lk-menu">
+                        <ul class="d-flex align-items-center">
+                            <li><a href="{% url 'bought' %}" class="btn mr-2">Купленные курсы</a></li>
+                            <li><a href="/" class="btn mr-2">Проводимые курсы</a></li>
+                            <li><a href="/" class="btn mr-2">Настройки</a></li>
+                        </ul>
+                    </nav>
+                    <a href="/" class="btn btn-empty">Добавить курс</a>
+                </div>
+
+                {% block lk_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

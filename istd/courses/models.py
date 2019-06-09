@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 from companies.models import Company
+from users.models import UserProfile
 
 
 class Tags(models.Model):
@@ -33,13 +34,16 @@ class Course(models.Model):
     description = models.TextField('Описание')
     img = models.ImageField('Изображение курса', upload_to="courses/", null=True, blank=True)
     category = models.ForeignKey(CourseCategory, on_delete=models.PROTECT)
-    # date_start = models.DateTimeField('Дата и время начала курса', auto_now=True, blank=True)
+    date_start = models.DateTimeField('Дата и время начала курса', auto_now=True, blank=True)
     # TODO: ADD type
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     company_id = models.ForeignKey(Company, max_length=20, blank=True, null=True, on_delete=models.SET_NULL)  # TODO: создать модель компании
 
     def __str__(self):
         return str(self.name)
+
+    def get_pk(self):
+        return self.objects.get(name=self.name)
 
     class Meta:
         verbose_name = 'Курс'
@@ -55,6 +59,7 @@ class TagsToCourse(models.Model):
 
     class Meta:
         verbose_name = 'Тег к курсу'
+
 
 class Lesson(models.Model):
     name = models.CharField('Название урока', max_length=255)
@@ -121,3 +126,17 @@ class CoursesInPackage(models.Model):
     class Meta:
         verbose_name = 'Курс в пакете'
         verbose_name_plural = 'Курсы в пакете'
+
+
+class SubscribeToCourse(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return str(self.course)
+
+    def get_courses(self, user):
+        return self.course.objects.filter(user=user)
+
+    class Meta:
+        verbose_name = 'Запись на курс'

@@ -753,3 +753,8 @@ textarea {
     height: 200px;
     margin-bottom: 17px;
 }
+
+.cc-left .description {
+    max-height: 45px;
+    overflow: hidden;
+}

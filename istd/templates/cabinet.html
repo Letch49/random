@@ -1,0 +1,18 @@
+{% extends 'lk.html' %}
+{% load static %}
+
+{% block bg %}class="none"{% endblock %}
+
+{% block lk_content %}
+  <div class="container">
+	<h1>Личный кабинет</h1>
+	
+	<div class="limitter">
+		Ваш баланс <span>{{ request.user.userdata.balance }} рублей</span>, вы можете пополнить его!
+	</div>
+	<div class="d-flex justify-content-center">
+		<a href="#" data-toggle="modal" data-target="#balance" class="btn">Пополнить баланс</a>
+	</div>
+	
+  </div>
+{% endblock %}

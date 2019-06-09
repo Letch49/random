@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block bg %}class="none"{% endblock %}
+
+{% block content %}
+<section id="cabinet">
+	<div class="background-user" style="background-image: url('/media/{{ course.img }}'); background-position: 0 -518px; background-attachment: fixed;">
+		<div class="container p-5">
+			<div class="profile-header d-flex justify-content-between align-items-center">
+				<div class="ava big-ava" style="background-image: url(/media/{{ course.img }});"></div>
+				<div class="about-user">
+					<h2>{{ course.name }}</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container user-lk-content">
+
+		<div class="lk-main-content">
+			<div class="d-flex align-items-center justify-content-between">
+				<div class="w-100">
+					<h3>О курсе</h3>
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<div class="justify-content-between d-flex align-items-center">
+							<div class="label label-user">Начало {{ course.date_start }}</div>
+							<div class="price-course">Стоимость {{ course.price }} ₽</div>
+						</div>
+						{% if not isByu %}
+						<form method="POST" action="">
+							{% csrf_token %}
+							<input type="hidden" name="course" value="{{ course.pk }}">
+							<button type="submit" class="btn btn-empty mr-2">Записаться на курс / купить</button>
+							<a data-toggle="modal" data-target="#barter" class="btn btn-empty">Предложить бартер</a>
+						</form>
+						{% else %}
+						<div class="subscribed">Вы уже купили курс</div>
+						{% endif %}
+					</div>
+					<div>
+						{{ course.description|safe }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

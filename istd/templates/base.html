@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="ru">
 <head>
@@ -5,182 +6,113 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>ISTUD</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="../static/dist/styles.css">
+    <link rel="stylesheet" href="{% static 'dist/css/styles.css' %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <div class="container">
-            <a href="/" class="logo"></a>
+<body {% block bg %}{% endblock %}>
+<header>
+    <div class="container d-flex justify-content-between">
+        <a href="/" class="logo"></a>
 
-            <div>
-                <nav class="main-menu">
-                    <ul>
-                        <li><a href="/courses">Все курсы</a></li>
-                        <li><a href="/companies">Компании</a></li>
-                        <li><a href="/rating">Рейтинг</a></li>
-                        <li><a href="/cabinet">Кабинет</a></li>
-                    </ul>
-                </nav>
-                <div class="about-user">
-                    <div class="data">
-                        <div>Иван Иванов</div>
-                        <div class="label">Пользователь</div>
+        <div class="d-flex align-items-center">
+            <nav class="main-menu">
+                <ul class="d-flex">
+                    <li class="d-flex align-items-center"><a href="{% url 'courses' %}" class="d-flex align-items-center">
+                        <svg class="icon">
+                            <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#cources"></use>
+                        </svg>
+                        Все курсы
+                    </a></li>
+                    <!--<li class="d-flex align-items-center"><a href="{% url 'companies' %}" class="d-flex align-items-center">
+                        <svg class="icon">
+                            <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#company"></use>
+                        </svg>
+                        Компании
+                    </a></li>-->
+                    <!-- <li class="d-flex align-items-center"><a href="#" class="d-flex align-items-center">
+                        <svg class="icon">
+                            <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#star"></use>
+                        </svg>
+                        Рейтинг
+                    </a></li> -->
+                    {% if request.user.is_authenticated %}
+                        <li class="d-flex align-items-center">
+                            <a href="/cabinet" class="d-flex align-items-center">
+                                <svg class="icon">
+                                    <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#ava"></use>
+                                </svg>
+                                Кабинет
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="d-flex align-items-center">
+                            <a data-toggle="modal" data-target="#register" class="d-flex align-items-center">
+                                <svg class="icon">
+                                    <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#ava"></use>
+                                </svg>
+                                Регистрация
+                            </a>
+                        </li>
+
+                        <li class="d-flex align-items-center last-point">
+                            <a data-toggle="modal" data-target="#login" class="d-flex align-items-center" style="margin-right: 20px;">
+                                <svg class="icon">
+                                    <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#ava"></use>
+                                </svg>
+                                Войти
+                            </a>
+                        </li>
+
+                    {% endif %}
+                    <li class="d-flex align-items-center">
+
+                    </li>
+                </ul>
+            </nav>
+            {% if request.user.is_authenticated %}
+                <div class="about-user d-flex align-items-center m-3">
+                    <div class="data mr-2">
+                        {% if user %}
+                            <div>{{ request.user.get_full_name }}</div>
+                        {% endif %}
+                        <div class="label">{{ request.user.username }}</div>
                     </div>
-                    <div class="avatar" style="background-image: url('');"></div>
+                    <div class="avatar" style="background-image: url('/media/{{ request.user.userdata.avatar }}');"></div>
                 </div>
-                <div class="search">
-                    <form action="">
-                        <button class="btn search-btn">
-
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-
-    </header>
-
-    <section id="promo">
-        <div class="container">
-            <h1>
-                Обучение не <br>
-                выходя из дома
-            </h1>
-            <div class="subtitle">Меньше стресса – больше знаний</div>
-        </div>
-    </section>
-
-    <section id="populars">
-        <h2>Популярное</h2>
-        <div class="tags">
-            <ul>
-                <li><a href="/category/it">#IT</a></li>
-                <li><a href="/category/design">#Дизайн</a></li>
-                <li><a href="/category/chemistry">#Химия</a></li>
-            </ul>
-        </div>
-        <div class="courselist">
-            <div class="col">
-                <a class="col-md-5">
-                    <span class="header">Изучаем Python с нуля</span>
-                    <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo</span>
-                    <span class="price">2500 ₽</span>
-                </a>
-                <a class="col-md-4">
-                    <span class="header">Готовим пиццу</span>
-                    <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo</span>
-                    <span class="price">Бесплатно</span>
-                </a>
-                <a class="col-md-3">
-                    <span class="header">Node.JS как есть</span>
-                    <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo</span>
-                    <span class="price">1337 ₽</span>
-                </a>
-            </div>
-            <div class="col">
-                <a class="col-md-4">
-                    <span class="header">Изучаем Python с нуля</span>
-                    <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo</span>
-                    <span class="price">2500 ₽</span>
-                </a>
-                <a class="col-md-3">
-                    <span class="header">Готовим пиццу дома</span>
-                    <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo</span>
-                    <span class="price">Бесплатно</span>
-                </a>
-                <a class="col-md-5">
-                    <span class="header">Node.JS как есть</span>
-                    <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo</span>
-                    <span class="price">1337 ₽</span>
-                </a>
+            {% endif %}
+            <div class="search">
+                <form action="{% url 'search' %}" method="get">
+					<span class="close-search">
+						<svg class="icon" onclick="$('.close-search svg').css({'opacity': '0'});$('.search input').css({'width':'0'});">
+						<use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#close"></use>
+					</svg>
+					</span>
+                    <input type="text" placeholder="Введите запрос" required name="q"/>
+                    <button class="btn search-btn"
+                            onclick="$('.close-search svg').css({'opacity': '1'});$('.search input').css({'width':'690px'});if($('.search input').css('width') !== '690px'){return false;}">
+                        <svg class="icon">
+                            <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#glass"></use>
+                        </svg>
+                    </button>
+                </form>
             </div>
         </div>
-        <a href="/courses/hot" class="btn btn-more">Посмотреть все</a>
-    </section>
 
-    <section id="afisha">
-        <h2>Афиша</h2>
-        <div class="subtitle-mini">Сейчас проходит 52 события</div>
+    </div>
 
-        <div class="owl-carousel">
-            <a class="afisha-block">
-                <div class="title">Готовим пиццу дома</div>
-                <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </div>
-                <div class="tags">
-                    <div>#Дизайн</div>
-                    <div>#Бесплатно</div>
-                </div>
-                <div class="start">
-                    Начало 19 июня в 20:00
-                </div>
-                <a href="/course/1" class="btn btn-afisha">Участвовать</a>
-            </a>
-            <a class="afisha-block">
-                <div class="title">Готовим пиццу дома</div>
-                <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </div>
-                <div class="tags">
-                    <div>#Дизайн</div>
-                    <div>#Бесплатно</div>
-                </div>
-                <div class="start">
-                    Начало 19 июня в 20:00
-                </div>
-                <a href="/course/1" class="btn btn-afisha">Участвовать</a>
-            </a>
-            <a class="afisha-block">
-                <div class="title">Готовим пиццу дома</div>
-                <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </div>
-                <div class="tags">
-                    <div>#Дизайн</div>
-                    <div>#Бесплатно</div>
-                </div>
-                <div class="start">
-                    Начало 19 июня в 20:00
-                </div>
-                <a href="/course/1" class="btn btn-afisha">Участвовать</a>
-            </a>
-            <a class="afisha-block">
-                <div class="title">Готовим пиццу дома</div>
-                <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </div>
-                <div class="tags">
-                    <div>#Дизайн</div>
-                    <div>#Бесплатно</div>
-                </div>
-                <div class="start">
-                    Начало 19 июня в 20:00
-                </div>
-                <a href="/course/1" class="btn btn-afisha">Участвовать</a>
-            </a>
-            <a class="afisha-block">
-                <div class="title">Готовим пиццу дома</div>
-                <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </div>
-                <div class="tags">
-                    <div>#Дизайн</div>
-                    <div>#Бесплатно</div>
-                </div>
-                <div class="start">
-                    Начало 19 июня в 20:00
-                </div>
-                <a href="/course/1" class="btn btn-afisha">Участвовать</a>
-            </a>
-        </div>
-    </section>
+</header>
 
-    <section id="mail">
-        <div class="mail-ico"></div>
-        <div class="sub-text">Подпишитесь, чтобы не пропустить важные курсы</div>
-        <form action="" class="mail-form">
-            <input type="text" placeholder="Введите свою почту" />
-            <button class="btn-mail">Подписаться</button>
-        </form>
-        <div class="notify">* Мы не будем слать Вам спам, обещаем</div>
-    </section>
+{% block content %}
 
-    <footer>
+{% endblock %}
+
+<footer>
+    <div class="container pb-3 pt-3 d-flex align-items-center justify-content-between">
         <div>
             <a href="/" class="logo footer-logo"></a>
             <div class="copy">
@@ -190,23 +122,151 @@
         </div>
         <div class="social">
             <ul>
-                <li><a href="https://vk.com"></a></li>
-                <li><a href="https://instagram.com"></a></li>
-                <li><a href="https://facebook.com"></a></li>
+                <li><a href="https://vk.com">
+                    <svg class="icon">
+                        <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#vk"></use>
+                    </svg>
+                </a></li>
+                <li><a href="https://instagram.com">
+                    <svg class="icon">
+                        <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#inst"></use>
+                    </svg>
+                </a></li>
+                <li><a href="https://facebook.com">
+                    <svg class="icon">
+                        <use xlink:href="{% static '/dist/img/svg/sprite.svg' %}#fb"></use>
+                    </svg>
+                </a></li>
             </ul>
         </div>
-    </footer>
+    </div>
+</footer>
 
+
+<div class="modal fade" id="balance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Пополнение баланса</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" onsubmit="alert('В разработке'); return false;">
+                        {% csrf_token %}
+                        <input type="number" name="balance" required placeholder="Сумма пополнения"/>
+                        <button type="submit" class="btn">Пополнить баланс</button>
+                    </form>
+                </div>
+            </div><!-- /.модальное окно-Содержание -->
+        </div><!-- /.модальное окно-диалог -->
+    </div><!-- /.модальное окно -->
+	
+	<div class="modal fade" id="barter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Предложить бартер</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'barter' %}">
+                        {% csrf_token %}
+                        <textarea name="barter"></textarea>
+                        <button type="submit" class="btn">Отправить предложение</button>
+                    </form>
+                </div>
+            </div><!-- /.модальное окно-Содержание -->
+        </div><!-- /.модальное окно-диалог -->
+    </div><!-- /.модальное окно -->
+
+{% if not request.user.is_authenticated %}
+	
+	
+	
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Авторизация</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <input type="email" name="email" required placeholder="E-mail"/>
+                        <input type="password" name="password" required placeholder="Пароль"/>
+                        <button type="submit" class="btn">Войти</button>
+                    </form>
+                    <div class="d-flex justify-content-between mt-3">
+                        <a></a>
+                        <a href="/register">Регистрация</a>
+                    </div>
+                </div>
+            </div><!-- /.модальное окно-Содержание -->
+        </div><!-- /.модальное окно-диалог -->
+    </div><!-- /.модальное окно -->
+
+    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Регистрация</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-field">
+                            <label for="avater">ФИО:</label>
+                            <input type="text" name="name" required placeholder="ФИО"/>
+                        </div>
+                        <div class="form-field">
+                            <label for="avater">E-mail:</label>
+                            <input type="email" name="email" required placeholder="E-mail"/>
+                        </div>
+                        <div class="form-field">
+                            <label for="avater">Пароль:</label>
+                            <input type="password" name="password" required placeholder="Пароль"/>
+                        </div>
+                        <div class="form-field">
+                            <label for="avater">Город:</label>
+                            <input type="text" name="city" required placeholder="Город"/>
+                        </div>
+                        <div class="form-field">
+                            <label for="avater">О себе:</label>
+                            <input type="text" name="about" required placeholder="О себе"/>
+                        </div>
+                        <div class="form-field">
+                            <label for="avater">Аватар:</label>
+                            <input type="file" name="avatar" required id="avatar"/>
+                        </div>
+
+                        <button type="submit" class="btn">Зарегистрироваться</button>
+                    </form>
+                </div>
+            </div><!-- /.модальное окно-Содержание -->
+        </div><!-- /.модальное окно-диалог -->
+    </div><!-- /.модальное окно -->
+{% endif %}
 <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $(".owl-carousel").owlCarousel();
-        });
-    </script>
+<script>
+	$(document).ready(function () {
+		$(".owl-carousel").owlCarousel();
+	});
+</script>
 </body>
 </html>

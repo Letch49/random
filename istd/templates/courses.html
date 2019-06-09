@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block bg %}class="none"{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+		<h1>Каталог курсов</h1>
+
+		<div class="row">
+
+			<div class="col-md-9">
+				<div class="row courselist">
+					{% for course in courses %}
+                        <div class="col-md-4 pt-1 mb-4">
+                            <a class="d-flex flex-column h-100 justify-content-between" style="background-image: url(/media/{{ course.img }})"
+                               href="{% url 'course' course.pk %}">
+                            <span>
+								<span class="header">{{ course.name }}</span>
+								<span class="description">{{ course.description }}</span>
+							</span>
+                                <span>
+                                    <span class="price">{{ course.price }} ₽</span>
+                                </span>
+                            </a>
+                        </div>
+                    {% endfor %}
+				</div>
+			</div>
+
+			<div class="col-md-3 categories">
+				<h3>Категории</h3>
+				<ul>
+					{% for category in categories %}
+						<li><a href="{% url 'courses_category' category.pk %}">{{ category.name }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="delimiter"></div>
+{% endblock %}

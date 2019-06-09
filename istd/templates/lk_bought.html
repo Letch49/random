@@ -1,0 +1,24 @@
+{% extends 'lk.html' %}
+{% load static %}
+
+{% block bg %}class="none"{% endblock %}
+
+{% block lk_content %}
+    <h1>Купленные курсы</h1>
+
+    <div class="course-list-big">
+        {% for c in bought %}
+            <div class="course-card d-flex align-items-center justify-content-between" style="background-image: url('/media/{{ c.course.img }}')">
+                <div class="cc-left">
+                    <span class="title">{{ c.course.name }}</span>
+                    <span class="description">{{ c.course.description }}</span>
+                </div>
+                <div class="cc-right">
+                    <span class="title">15% пройдено</span>
+                    <span class="progress-bar"><span style="width: 15%"></span></span>
+                    <a href="{% url 'course' c.course.pk %}" class="btn btn-yellow">Перейти на курс</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

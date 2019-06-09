@@ -19,6 +19,11 @@ class Lesson(admin.ModelAdmin):
     inlines = [FilesTabular]
 
 
+@admin.register(models.SubscribeToCourse)
+class SubscribeToCourse(admin.ModelAdmin):
+    list_display = ['course', 'user']
+
+
 class LessonsTabular(admin.TabularInline):
     model = models.LessonToCourse
 

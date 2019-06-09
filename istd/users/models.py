@@ -28,11 +28,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'пользователи'
 
     def get_full_name(self):
-        '''
-        Возвращает first_name и last_name с пробелом между ними.
-        '''
-        full_name = '%s %s' % (self.first_name, self.email)
-        return full_name.strip()
+        return self.first_name
+
+    def userdata(self):
+        return Profile.objects.get(user=self.pk)
 
     def get_short_name(self):
         '''

@@ -1,0 +1,174 @@
+@font-face {
+    src: url("../fonts/fs.otf");
+    font-family: "Title";
+}
+
+body {
+    background: #fff url(/img/bg.jpg) no-repeat;
+    font-family: "Open Sans", sans-serif;
+}
+
+header {
+    background: #fff;
+    box-shadow: 0px 0px 73px 0px rgba(0, 0, 0, 0.21);
+    padding: 15px 0;
+    margin-bottom: 15px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav.main-menu ul li a svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+}
+
+nav.main-menu ul li a svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    fill: #0029ce;
+}
+
+nav.main-menu ul li:after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: #e6e6e6;
+    display: block;
+    border-radius: 10px;
+    margin: 0 12px;
+}
+
+nav.main-menu ul li a {
+    color: #002ec9;
+    font-family: "Title", "Open Sans", sans-serif;
+    font-size: 1rem;
+}
+
+nav.main-menu ul li:last-child:after {
+    display: none;
+}
+
+a.logo {
+    width: 175px;
+    height: 68px;
+    background: url(/img/logo.png) no-repeat;
+    transition: 0.2s ease;
+}
+
+a.logo:hover {
+    transform: scale(1.05);
+}
+
+.data {
+    font-family: "Title", "Open Sans", sans-serif;
+    text-align: right;
+    color: #002ec9;
+}
+
+.data .label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.8rem;
+    margin-top: -5px;
+    font-style: italic;
+    color: #bdbdbd;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #e6e6e6;
+    border-radius: 50%;
+}
+
+h1, h2, h3, h4 {
+    font-family: "Title";
+    color: #0029ce;
+}
+
+.subtitle {
+    color: rgba(0, 41, 206, 0.4392156862745098);
+    font-size: 1.5rem;
+}
+
+section#promo .container {
+    padding: 7rem 0;
+}
+
+.tags ul li a {
+    padding: 10px;
+    display: block;
+    background-color: #e3e3e5;
+    margin: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.tags ul li:first-child a {
+    margin-left: 0;
+}
+
+.courselist div a {
+    padding: 15px !important;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-size: cover;
+}
+
+.courselist div a:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 41, 206, 0.42);
+    position: absolute;
+    z-index: 1;
+}
+
+.courselist div a {
+    overflow: hidden;
+    position: relative;
+}
+
+.courselist div a * {
+    z-index: 3;
+    position: relative;
+}
+
+.courselist div a span {
+    display: block;
+    text-align: right;
+    color: #fff;
+}
+
+.courselist div a span.header {
+    font-family: "Title", sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+}
+
+span.price {
+    padding: 5px 10px;
+    background: #f4f59e;
+}
+
+span.price {
+    float: right;
+    border-radius: 3px;
+    color: #0029ce !important;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.courselist div a span.description {
+    height: 74px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

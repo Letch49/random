@@ -1,5 +1,9 @@
+import datetime
+
+from django.db.models import Count
 from django.views.generic import TemplateView
 
+from courses.models import SubscribeToCourse, Course
 from . import models as modelsAdmin
 
 
@@ -18,10 +22,14 @@ class BaseView(TemplateView):
 
 
 class IndexView(BaseView):
-    template_name = 'base.html'
+    template_name = 'index.html'
 
     def get_context_data(self, **kwards):
         context = super(IndexView, self).get_context_data(**kwards)
-        context['lol'] = 1
-
+        context['popular'] = SubscribeToCourse.objects.values('course', 'course__name', 'course__description', 'course__price', 'course__img', 'course__category__name').annotate(
+            total=Count('course')).order_by('-total')[:6]
+        context['popular_categories'] = SubscribeToCourse.objects.values('course__category__name', 'course__category_id').annotate(
+            total=Count('course__category__name', distinct=True)).order_by('total')[:6]
+        context['afisha'] = Course.objects.distinct().filter(date_start__gte=(datetime.datetime.now() - datetime.timedelta(days=7)), price=0)
+        context['afisha_count'] = context['afisha'].count()
         return context

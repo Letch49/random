@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section id="promo">
+        <div class="container">
+            <h1>
+                Обучение не <br>
+                выходя из дома
+            </h1>
+            <div class="subtitle">Меньше стресса – больше знаний</div>
+        </div>
+    </section>
+
+    <section id="populars">
+        <div class="container">
+            <h2>Популярное</h2>
+            <div class="tags">
+                <ul class="d-flex mb-2">
+                    {% for category in popular_categories %}
+                        <li><a href="{% url 'courses_category' category.course__category_id %}">#{{ category.course__category__name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="courselist">
+                <div class="row mb-3">
+                    {% for course in popular %}
+                        <div class="col-md-4 mt-4 pt-1">
+                            <a class="d-flex flex-column h-100 justify-content-between" style="background-image: url(/media/{{ course.course__img }})"
+                               href="{% url 'course' course.course %}">
+                            <span>
+								<span class="header">{{ course.course__name }}</span>
+								<span class="description">{{ course.course__description }}</span>
+							</span>
+                                <span>
+                                    <span class="price">{{ course.course__price }} ₽</span>
+                                </span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center m-4">
+                <a href="{% url 'courses' %}" class="btn btn-more">Посмотреть все</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="afisha">
+        <div class="container">
+            <h2>Афиша</h2>
+            <div class="subtitle-mini">Сейчас проходит <b>{{ afisha_count }}</b> события</div>
+
+            <div class="owl-carousel">
+                {% for course in afisha %}
+                    <a href="{% url 'course' course.pk %}" class="afisha-block" style="background-image: url(/media/{{ course.img }})">
+                    <span class="top">
+                        <span class="title">{{ course.name }}</span>
+                    <span class="text">{{ course.description }}</span>
+                    <span class="tags">
+                        <span>#{{ course.category }}</span>
+                        <span>#Бесплатно</span>
+                    </span>
+                    </span>
+                        <span class="bottom">
+                        <span class="start">Начало {{ course.date_start }}</span>
+                        <span class="btn btn-afisha">Участвовать</span>
+                    </span>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section id="mail">
+        <div class="container h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-md-6 h-100 d-flex flex-column justify-content-center align-items-center">
+                    <div class="mail-ico"></div>
+                    <div class="sub-text">Подпишитесь, чтобы не пропустить важные курсы</div>
+                    <form action="" class="mail-form">
+                        <input type="mail" required placeholder="Введите свою почту"/>
+                        <button class="btn-mail">Подписаться</button>
+                    </form>
+                    <div class="notify">* Мы не будем слать Вам спам, обещаем</div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
